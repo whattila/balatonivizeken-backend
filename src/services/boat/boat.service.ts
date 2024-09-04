@@ -87,8 +87,10 @@ export class BoatService {
     return boat;
   }
 
-  // I removed throwing 'NotFoundException('A hajó nem található')' here. Can it cause any problems here?
+  // I removed throwing 'NotFoundException('A hajó nem található')' here, because the client didn't work that way. Can it cause any problems here?
   // Or should it be removed in other methods as well?
+  // Now the relevant test doesn't work
+  // Can we make the client work in another way?
   async getBoatByUserId(userId: string): Promise<Boat> {
     const boat = await this.boatModel.findOne({ userId: userId }).lean();
     return boat;
