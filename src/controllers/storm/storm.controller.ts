@@ -4,6 +4,7 @@ import { Observable, fromEvent, map } from 'rxjs';
 import { StormService } from '../../services/storm/storm.service';
 import { StormInputDto } from 'src/models/dto/input/storm.input.dto';
 
+// @UseGuards(AuthGuard)
 @Controller('storm')
 export class StormController {
   constructor(
@@ -14,7 +15,7 @@ export class StormController {
     @Sse('alerts')
     stormAlerts(): Observable<MessageEvent> {
       return fromEvent(this.eventEmitter, StormService.NEW_STORM_EVENT_NAME).pipe(
-        map((storm) => ({ id: 'new-stormalert', data: storm }) as MessageEvent), // Can I convert storm to StormInputDto? Should I?
+        map((storm) => ({ id: 'new-stormalert', data: storm }) as MessageEvent), // Can I convert storm to StormAlert? Should I?
       );
     }
 

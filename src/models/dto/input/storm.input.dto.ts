@@ -4,19 +4,20 @@ import {
   } from 'class-validator';
 
 export class StormInputDto {
-    @IsString()
-  _id?: string;
-
   @IsString()
   area: string;
 
   @IsNumber()
   longitude: number;
-
+  
   @IsNumber()
   latitude: number;
+  
+  @IsNumber()
+  hour: number;
 
-  // expectedTime: ez milyen típus legyen? Ne felejtsük le az @isX() annotációt!
+  @IsNumber()
+  minute: number;
 
   @IsString()
   degree: string;
