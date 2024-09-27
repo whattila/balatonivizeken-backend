@@ -1,7 +1,7 @@
 import {
     IsString,
     IsNumber
-  } from 'class-validator';
+} from 'class-validator';
 
 export class StormInputDto {
   @IsString()

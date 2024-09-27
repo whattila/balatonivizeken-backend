@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  const eventSource = new EventSource('http://localhost:3000/storm/alerts');
+  const eventSource = new EventSource('http://localhost:3000/sos/alerts');
   eventSource.onmessage = ({ data }) => {
     const message = document.createElement('li');
     message.innerText = 'New message: ' + data;

@@ -10,6 +10,7 @@ import { BoatModule } from './controllers/boat/boat.module';
 import { NoGoZoneModule } from './controllers/no_go_zone/no_go_zone.module';
 import { UsersModule } from './services/users/users.module';
 import { StormModule } from './controllers/storm/storm.module';
+import { SosModule } from './controllers/sos/sos.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StormModule } from './controllers/storm/storm.module';
     BoatModule,
     NoGoZoneModule,
     StormModule,
+    SosModule
   ],
   controllers: [AppController],
   providers: [AppService],

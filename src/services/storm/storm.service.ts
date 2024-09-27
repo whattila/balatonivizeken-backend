@@ -15,7 +15,7 @@ export class StormService {
 
   static readonly NEW_STORM_EVENT_NAME = 'new-storm-alert';
 
-  sendStormAlert(storm: StormInputDto): Promise<Storm> {
+  async sendStormAlert(storm: StormInputDto): Promise<Storm> {
     this.eventEmitter.emit(StormService.NEW_STORM_EVENT_NAME, storm);
 
     // we save the storm data to the database for accountabilty

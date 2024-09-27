@@ -22,7 +22,7 @@ export class StormController {
     @Post('new')
     async createStorm(@Body() storm: StormInputDto) {
       // ...
-      this.stormService.sendStormAlert(storm); // should I do anything before and after this?
+      await this.stormService.sendStormAlert(storm); // should I do anything before and after this?
       // ...
     }
 }
