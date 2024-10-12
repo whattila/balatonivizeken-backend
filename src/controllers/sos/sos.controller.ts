@@ -1,10 +1,11 @@
-import { Body, Controller, MessageEvent, Post, Sse } from "@nestjs/common";
+import { Body, Controller, MessageEvent, Post, Sse, UseGuards } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { fromEvent, map, Observable } from "rxjs";
+import { AuthGuard } from "src/auth_guard/auth.guard";
 import { SosInputDto } from "src/models/dto/input/sos.input.dto";
 import { SosService } from "src/services/sos/sos.service";
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('sos')
 export class SosController {
     constructor(

@@ -1,6 +1,7 @@
 import {
     IsString,
-    IsNumber
+    IsNumber,
+    IsDateString
 } from 'class-validator';
 
 export class StormInputDto {
@@ -13,11 +14,8 @@ export class StormInputDto {
   @IsNumber()
   latitude: number;
   
-  @IsNumber()
-  hour: number;
-
-  @IsNumber()
-  minute: number;
+  @IsDateString()
+  date: string;
 
   @IsString()
   degree: string;

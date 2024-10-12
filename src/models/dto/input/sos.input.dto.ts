@@ -1,7 +1,6 @@
 import {
     IsString,
     IsNumber,
-    IsPhoneNumber,
     IsDateString
 } from 'class-validator';
 
@@ -20,8 +19,5 @@ export class SosInputDto {
 
     @IsDateString()
     date: string;
-
-    @IsPhoneNumber()
-    phoneNumber: string;
 }
 

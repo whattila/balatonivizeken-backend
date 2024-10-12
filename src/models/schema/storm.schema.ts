@@ -17,10 +17,7 @@ export class Storm {
     latitude: number;
   
     @Prop({ required: true })
-    hour: number;
-
-    @Prop({ required: true })
-    minute: number;
+    date: string;
   
     @Prop({ required: true })
     degree: string;

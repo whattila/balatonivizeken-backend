@@ -15,7 +15,11 @@ export class UsersService {
     return await newUser.save();
   }
 
-  async findOne(username: string): Promise<User | undefined> {
+  async findById(id: string): Promise<User> {
+    return this.userModel.findById(id).lean();
+  }
+
+  async findByUserName(username: string): Promise<User | undefined> {
     return this.userModel.findOne({ username: username }).lean();
   }
 

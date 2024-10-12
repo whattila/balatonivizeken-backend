@@ -1,10 +1,11 @@
-import { Controller, Post, MessageEvent, Sse, Body } from '@nestjs/common';
+import { Controller, Post, MessageEvent, Sse, Body, UseGuards } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Observable, fromEvent, map } from 'rxjs';
 import { StormService } from '../../services/storm/storm.service';
 import { StormInputDto } from 'src/models/dto/input/storm.input.dto';
+import { AuthGuard } from 'src/auth_guard/auth.guard';
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('storm')
 export class StormController {
   constructor(

@@ -4,13 +4,14 @@ import { SosController } from "./sos.controller";
 import { SosService } from "src/services/sos/sos.service";
 import { Sos, SosSchema } from "src/models/schema/sos.schema";
 import { BoatModule } from "../boat/boat.module";
+import { UsersModule } from "src/services/users/users.module";
 
 const mongooseModul = [
     MongooseModule.forFeature([{ name: Sos.name, schema: SosSchema }]),
   ];
   
   @Module({
-      imports: [BoatModule, ...mongooseModul],
+      imports: [BoatModule, UsersModule, ...mongooseModul],
       controllers: [SosController],
       providers: [SosService],
       exports: [SosService, ...mongooseModul],
