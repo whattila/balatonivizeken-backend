@@ -15,14 +15,21 @@ export class StormService {
 
   static readonly NEW_STORM_EVENT_NAME = 'new-storm-alert';
 
-  async sendStormAlert(storm: StormInputDto): Promise<Storm> {
-    this.eventEmitter.emit(StormService.NEW_STORM_EVENT_NAME, storm);
+  async sendStormAlert(storm: StormInputDto): Promise<void> {
+    const newStorm = await this._saveStormAlert(storm);
+    this.eventEmitter.emit(StormService.NEW_STORM_EVENT_NAME, newStorm);
+  }
 
-    // we save the storm data to the database for accountabilty
+  async _saveStormAlert(storm: StormInputDto): Promise<Storm> {
     const newStorm = new this.stormModel({
       ...storm,
       _id: undefined
     })
     return newStorm.save();
+  }
+
+  async getStorms(): Promise<Storm[]> {
+    const storms = await this.stormModel.find({}).lean();
+    return storms;
   }
 }

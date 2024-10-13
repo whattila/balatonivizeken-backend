@@ -1,9 +1,10 @@
-import { Controller, Post, MessageEvent, Sse, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, MessageEvent, Sse, Body, UseGuards, Get } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Observable, fromEvent, map } from 'rxjs';
 import { StormService } from '../../services/storm/storm.service';
 import { StormInputDto } from 'src/models/dto/input/storm.input.dto';
 import { AuthGuard } from 'src/auth_guard/auth.guard';
+import { Storm } from 'src/models/schema/storm.schema';
 
 @UseGuards(AuthGuard)
 @Controller('storm')
@@ -22,8 +23,11 @@ export class StormController {
 
     @Post('new')
     async createStorm(@Body() storm: StormInputDto) {
-      // ...
-      await this.stormService.sendStormAlert(storm); // should I do anything before and after this?
-      // ...
+      await this.stormService.sendStormAlert(storm);
+    }
+
+    @Get()
+    async getAllStorms(): Promise<Storm[]> {
+      return this.stormService.getStorms();
     }
 }

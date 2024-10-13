@@ -1,8 +1,9 @@
-import { Body, Controller, MessageEvent, Post, Sse, UseGuards } from "@nestjs/common";
+import { Body, Controller, MessageEvent, Post, Sse, UseGuards, Get, Param } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { fromEvent, map, Observable } from "rxjs";
 import { AuthGuard } from "src/auth_guard/auth.guard";
 import { SosInputDto } from "src/models/dto/input/sos.input.dto";
+import { Sos } from "src/models/schema/sos.schema";
 import { SosService } from "src/services/sos/sos.service";
 
 @UseGuards(AuthGuard)
@@ -23,5 +24,15 @@ export class SosController {
     @Post('send')
     async sendSos(@Body() sos: SosInputDto) {
         await this.sosService.sendSos(sos);
+    }
+
+    @Get()
+    async getAllSos(): Promise<Sos[]> {
+        return this.sosService.getAllSos();
+    }
+
+    @Get('by-id/:id')
+    async getSosById(@Param('id') id: string): Promise<Sos> {
+        return this.sosService.getSosById(id);
     }
 }

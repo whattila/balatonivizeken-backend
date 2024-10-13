@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -19,7 +19,12 @@ export class SosService {
 
   static readonly NEW_SOS_EVENT_NAME = 'new-sos-alert';
 
-  async sendSos(sos: SosInputDto): Promise<Sos> {
+  async sendSos(sos: SosInputDto): Promise<void> {
+    const newSos = await this._saveSos(sos);
+    this.eventEmitter.emit(SosService.NEW_SOS_EVENT_NAME, newSos);
+  }
+
+  async _saveSos(sos: SosInputDto): Promise<Sos> {
     // we update the boat's location and last positions with the sos data
     await this.boatService.updateLocation(sos.boatId, {latitude: sos.latitude, longitude: sos.longitude});
     const boat = await this.boatService.getBoatById(sos.boatId);
@@ -30,9 +35,19 @@ export class SosService {
       phoneNumber: user.phoneNumber,
       lastPositions: boat.lastPositions
     })
-    this.eventEmitter.emit(SosService.NEW_SOS_EVENT_NAME, newSos);
-
-    // we save the sos data to the database for accountabilty
     return newSos.save();
+  }
+
+  async getAllSos(): Promise<Sos[]> {
+    const sos = await this.sosModel.find({}).lean();
+    return sos;
+  }
+
+  async getSosById(sosId: string): Promise<Sos> {
+    const sos = await this.sosModel.findOne({_id: sosId}).lean();
+    if (!sos) {
+      throw new NotFoundException('A segélykérés nem található');
+    }
+    return sos;
   }
 }
