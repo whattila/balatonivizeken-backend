@@ -7,6 +7,7 @@ import { BoatInputDto } from '../../models/dto/input/boat.input.dto';
 import { GpsEnabledInput } from '../../models/dto/input/gps_enabled.input.dto';
 import { LocationInput } from '../../models/dto/input/location_update.input.dto';
 import { Boat } from '../../models/schema/boat.schema';
+import { BoatHeaderDto } from 'src/models/dto/boat.header.dto';
 
 @Injectable()
 export class BoatService {
@@ -116,6 +117,11 @@ export class BoatService {
     });
 
     return plainToInstance(BoatMarkerDto, boatsInRange);
+  }
+
+  async getBoatHeaders(): Promise<BoatHeaderDto[]> {
+    const boats = await this.boatModel.find().lean();
+    return plainToInstance(BoatHeaderDto, boats);
   }
 
   _degreesToRadians(degrees: number): number {

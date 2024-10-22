@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../models/schema/user.schema';
+import { UserHeaderDto } from 'src/models/dto/user.header.dto';
+import { plainToInstance } from 'class-transformer';
+import { UserDto } from 'src/models/dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,5 +28,15 @@ export class UsersService {
 
   async findByEmailAddress(emailAddress: string): Promise<User> {
     return this.userModel.findOne({ emailAddress: emailAddress }).lean();
+  }
+
+  async getUserHeaders(): Promise<UserHeaderDto[]> {
+    const users = await this.userModel.find().lean();
+    return plainToInstance(UserHeaderDto, users);
+  }
+
+  async getSingleUser(id: string): Promise<UserDto> {
+    const user = this.userModel.findById(id).lean();
+    return plainToInstance(UserDto, user);
   }
 }
