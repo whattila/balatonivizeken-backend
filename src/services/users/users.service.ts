@@ -5,6 +5,7 @@ import { User, UserDocument } from '../../models/schema/user.schema';
 import { UserHeaderDto } from 'src/models/dto/user.header.dto';
 import { plainToInstance } from 'class-transformer';
 import { UserDto } from 'src/models/dto/user.dto';
+import { UserType } from 'src/models/enums/user_type.enum';
 
 @Injectable()
 export class UsersService {
@@ -31,7 +32,7 @@ export class UsersService {
   }
 
   async getUserHeaders(): Promise<UserHeaderDto[]> {
-    const users = await this.userModel.find().lean();
+    const users = await this.userModel.find({ userType: { $ne: UserType.ADMIN }}).lean();
     return plainToInstance(UserHeaderDto, users);
   }
 
