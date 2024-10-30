@@ -41,7 +41,9 @@ export class SosService {
   }
 
   async getAllSos(): Promise<SosHeaderDto[]> {
-    const sos = await this.sosModel.find({}).sort({ date: -1 }).lean();
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+
+    const sos = await this.sosModel.find({ date: { $gte: twoHoursAgo }}).sort({ date: -1 }).lean();
     return plainToInstance(SosHeaderDto, sos);
   }
 

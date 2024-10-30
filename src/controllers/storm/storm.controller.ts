@@ -5,6 +5,7 @@ import { StormService } from '../../services/storm/storm.service';
 import { StormInputDto } from 'src/models/dto/input/storm.input.dto';
 import { AuthGuard } from 'src/auth_guard/auth.guard';
 import { Storm } from 'src/models/schema/storm.schema';
+import { LocationInput } from 'src/models/dto/input/location_update.input.dto';
 
 @UseGuards(AuthGuard)
 @Controller('storm')
@@ -27,7 +28,7 @@ export class StormController {
     }
 
     @Get()
-    async getAllStorms(): Promise<Storm[]> {
-      return this.stormService.getStorms();
+    async getStorms(@Body() centerPoint: LocationInput): Promise<Storm[]> {
+      return this.stormService.getStormsInRange(centerPoint);
     }
 }
