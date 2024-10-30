@@ -6,6 +6,8 @@ import { SosInputDto } from "src/models/dto/input/sos.input.dto";
 import { Sos } from "src/models/schema/sos.schema";
 import { BoatService } from "../boat/boat.service";
 import { UsersService } from "../users/users.service";
+import { plainToInstance } from "class-transformer";
+import { SosHeaderDto } from "src/models/dto/sos.header.dto";
 
 @Injectable()
 export class SosService {
@@ -38,9 +40,9 @@ export class SosService {
     return newSos.save();
   }
 
-  async getAllSos(): Promise<Sos[]> {
-    const sos = await this.sosModel.find({}).lean();
-    return sos;
+  async getAllSos(): Promise<SosHeaderDto[]> {
+    const sos = await this.sosModel.find({}).sort({ date: -1 }).lean();
+    return plainToInstance(SosHeaderDto, sos);
   }
 
   async getSosById(sosId: string): Promise<Sos> {

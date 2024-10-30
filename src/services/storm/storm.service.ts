@@ -29,7 +29,7 @@ export class StormService {
   }
 
   async getStorms(): Promise<Storm[]> {
-    const storms = await this.stormModel.find({}).lean();
+    const storms = await this.stormModel.find({}).sort({ date: -1 }).lean();
     return storms;
   }
 }

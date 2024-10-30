@@ -3,6 +3,7 @@ import { EventEmitter2 } from "@nestjs/event-emitter";
 import { fromEvent, map, Observable } from "rxjs";
 import { AuthGuard } from "src/auth_guard/auth.guard";
 import { SosInputDto } from "src/models/dto/input/sos.input.dto";
+import { SosHeaderDto } from "src/models/dto/sos.header.dto";
 import { Sos } from "src/models/schema/sos.schema";
 import { SosService } from "src/services/sos/sos.service";
 
@@ -27,7 +28,7 @@ export class SosController {
     }
 
     @Get()
-    async getAllSos(): Promise<Sos[]> {
+    async getAllSos(): Promise<SosHeaderDto[]> {
         return this.sosService.getAllSos();
     }
 
