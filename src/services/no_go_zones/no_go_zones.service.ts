@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { NoGoZone } from '../../models/schema/no_go_zone.schema';
-import { NoGoZoneInputDto } from 'src/models/dto/input/no_go_zone.input.dto';
+import { NoGoZoneInputDto } from '../../models/dto/input/no_go_zone.input.dto';
 
 @Injectable()
 export class NoGoZoneService {

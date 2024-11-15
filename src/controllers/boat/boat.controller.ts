@@ -6,7 +6,7 @@ import { GpsEnabledInput } from '../../models/dto/input/gps_enabled.input.dto';
 import { LocationInput } from '../../models/dto/input/location_update.input.dto';
 import { Boat } from '../../models/schema/boat.schema';
 import { BoatService } from '../../services/boat/boat.service';
-import { BoatHeaderDto } from 'src/models/dto/boat.header.dto';
+import { BoatHeaderDto } from '../../models/dto/boat.header.dto';
 
 @UseGuards(AuthGuard)
 @Controller('boat')

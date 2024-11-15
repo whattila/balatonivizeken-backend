@@ -7,7 +7,7 @@ import { BoatInputDto } from '../../models/dto/input/boat.input.dto';
 import { GpsEnabledInput } from '../../models/dto/input/gps_enabled.input.dto';
 import { LocationInput } from '../../models/dto/input/location_update.input.dto';
 import { Boat } from '../../models/schema/boat.schema';
-import { BoatHeaderDto } from 'src/models/dto/boat.header.dto';
+import { BoatHeaderDto } from '../../models/dto/boat.header.dto';
 
 @Injectable()
 export class BoatService {

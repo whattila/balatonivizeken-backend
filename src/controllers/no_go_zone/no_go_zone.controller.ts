@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/c
 import { AuthGuard } from '../../auth_guard/auth.guard';
 import { NoGoZone } from '../../models/schema/no_go_zone.schema';
 import { NoGoZoneService } from '../../services/no_go_zones/no_go_zones.service';
-import { NoGoZoneInputDto } from 'src/models/dto/input/no_go_zone.input.dto';
+import { NoGoZoneInputDto } from '../../models/dto/input/no_go_zone.input.dto';
 
 @UseGuards(AuthGuard)
 @Controller('zone')

@@ -168,6 +168,34 @@ describe('BoatService', () => {
     });
   });
 
+  describe('getBoatHeaders', () => {
+    it('should get headers corresponding to the boats in the database', async () => {
+      await boatService.updateBoat({
+        userId: userProvider.defaultUser._id.toString(),
+        boatType: 'smallBoat',
+        displayName: 'asd',
+        gpsEnabled: false,
+        longitude: 0,
+        latitude: 0,
+      });
+      const boats = await boatModel.find();
+      expect(boats.length).toEqual(2);
+
+      const boatHeaders = await boatService.getBoatHeaders();
+      expect(boatHeaders.length).toEqual(2);
+      expect(boatHeaders.at(0)).toEqual({
+        _id: boats.at(0)._id,
+        boatType: boats.at(0).boatType,
+        displayName: boats.at(0).displayName
+      });
+      expect(boatHeaders.at(1)).toEqual({
+        _id: boats.at(1)._id,
+        boatType: boats.at(1).boatType,
+        displayName: boats.at(1).displayName
+      });
+    });
+  });
+
   afterEach(async () => {
     // CleanUp - Each test should start fresh
     await clearCollections(connection);

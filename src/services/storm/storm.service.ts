@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { LocationInput } from 'src/models/dto/input/location_update.input.dto';
-import { StormInputDto } from 'src/models/dto/input/storm.input.dto';
-import { Storm } from 'src/models/schema/storm.schema';
+import { LocationInput } from '../../models/dto/input/location_update.input.dto';
+import { StormInputDto } from '../../models/dto/input/storm.input.dto';
+import { Storm } from '../../models/schema/storm.schema';
 
 @Injectable()
 export class StormService {

@@ -24,5 +24,5 @@ export class RegistrationInputDto {
 
   @IsOptional()
   @IsString()
-  invitationCode: string;
+  invitationCode?: string;
 }

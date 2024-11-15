@@ -11,7 +11,7 @@ import { RegistrationInputDto } from '../../models/dto/input/registration.input.
 import { SignInInputDto } from '../../models/dto/input/sign_in.input.dto';
 import { User } from '../../models/schema/user.schema';
 import { UsersService } from '../users/users.service';
-import { UserType } from 'src/models/enums/user_type.enum';
+import { UserType } from '../../models/enums/user_type.enum';
 
 const salt = config.saltValue;
 

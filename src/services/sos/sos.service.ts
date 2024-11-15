@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { SosInputDto } from "src/models/dto/input/sos.input.dto";
-import { Sos } from "src/models/schema/sos.schema";
+import { SosInputDto } from "../../models/dto/input/sos.input.dto";
+import { Sos } from "../../models/schema/sos.schema";
 import { BoatService } from "../boat/boat.service";
 import { UsersService } from "../users/users.service";
 import { plainToInstance } from "class-transformer";
-import { SosHeaderDto } from "src/models/dto/sos.header.dto";
+import { SosHeaderDto } from "../../models/dto/sos.header.dto";
 
 @Injectable()
 export class SosService {

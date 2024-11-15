@@ -1,9 +1,8 @@
 import { Controller, Get, Param, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "src/auth_guard/auth.guard";
-import { UserDto } from "src/models/dto/user.dto";
-import { UserHeaderDto } from "src/models/dto/user.header.dto";
-import { User } from "src/models/schema/user.schema";
-import { UsersService } from "src/services/users/users.service";
+import { AuthGuard } from "../../auth_guard/auth.guard";
+import { UserDto } from "../../models/dto/user.dto";
+import { UserHeaderDto } from "../../models/dto/user.header.dto";
+import { UsersService } from "../../services/users/users.service";
 
 @UseGuards(AuthGuard)
 @Controller('user')

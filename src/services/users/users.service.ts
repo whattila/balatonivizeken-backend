@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../models/schema/user.schema';
-import { UserHeaderDto } from 'src/models/dto/user.header.dto';
+import { UserHeaderDto } from '../../models/dto/user.header.dto';
 import { plainToInstance } from 'class-transformer';
-import { UserDto } from 'src/models/dto/user.dto';
-import { UserType } from 'src/models/enums/user_type.enum';
+import { UserDto } from '../../models/dto/user.dto';
+import { UserType } from '../../models/enums/user_type.enum';
 
 @Injectable()
 export class UsersService {

@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { StormController } from "./storm.controller";
-import { StormService } from "src/services/storm/storm.service";
+import { StormService } from "../../services/storm/storm.service";
 import { MongooseModule } from '@nestjs/mongoose';
 import { Storm, StormSchema } from '../../models/schema/storm.schema';
 
