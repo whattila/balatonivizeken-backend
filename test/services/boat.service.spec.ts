@@ -183,15 +183,15 @@ describe('BoatService', () => {
 
       const boatHeaders = await boatService.getBoatHeaders();
       expect(boatHeaders.length).toEqual(2);
-      expect(boatHeaders.at(0)).toEqual({
-        _id: boats.at(0)._id,
-        boatType: boats.at(0).boatType,
-        displayName: boats.at(0).displayName
+      expect(boatHeaders[0]).toEqual({
+        _id: boats[0]._id,
+        boatType: boats[0].boatType,
+        displayName: boats[0].displayName
       });
-      expect(boatHeaders.at(1)).toEqual({
-        _id: boats.at(1)._id,
-        boatType: boats.at(1).boatType,
-        displayName: boats.at(1).displayName
+      expect(boatHeaders[1]).toEqual({
+        _id: boats[1]._id,
+        boatType: boats[1].boatType,
+        displayName: boats[1].displayName
       });
     });
   });

@@ -31,6 +31,7 @@ export class StormService {
 
   async getStormsInRange(centerPoint: LocationInput): Promise<Storm[]> {
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+    const stormRadiusKm = 10;
 
     const storms = await this.stormModel.find({ date: { $gte: twoHoursAgo }}).sort({ date: -1 }).lean();
     const stormsInRange: Storm[] = []; //return only the storms in 10km range from centerPoint
@@ -42,7 +43,7 @@ export class StormService {
         centerPoint.longitude,
       );
 
-      if (distanceBetweenPoints <= 10) {
+      if (distanceBetweenPoints <= stormRadiusKm) {
         return stormsInRange.push(storm);
       }
     });

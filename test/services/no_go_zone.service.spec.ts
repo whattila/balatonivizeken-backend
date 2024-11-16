@@ -73,7 +73,7 @@ describe('NoGoZoneService', () => {
             .lean();
     
           expect(updatedNoGoZone.zonePoints.length).toEqual(3);
-          expect(updatedNoGoZone.zonePoints.at(0)).toEqual({ latitude: 46.785, longitude: 17.447 });
+          expect(updatedNoGoZone.zonePoints[0]).toEqual({ latitude: 46.785, longitude: 17.447 });
         });
     });
 

@@ -48,7 +48,7 @@ export class SosService {
   }
 
   async getSosById(sosId: string): Promise<Sos> {
-    const sos = await this.sosModel.findOne({_id: sosId}).lean();
+    const sos = await this.sosModel.findById(sosId).lean();
     if (!sos) {
       throw new NotFoundException('A segélykérés nem található');
     }
