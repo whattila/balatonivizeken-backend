@@ -40,7 +40,7 @@ export class BoatService {
       throw new NotFoundException('A hajó nem található');
     }
 
-    if (boat.lastPositions.length == 5) {
+    if (boat.lastPositions.length >= 5) {
       await this.boatModel
         .findByIdAndUpdate(
           { _id: id },
