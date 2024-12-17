@@ -136,10 +136,11 @@ describe('BoatService', () => {
   });
 
   describe('getBoatByUserId', () => {
-    it('should fail because boat with given userid doesnt exist', async () => {
-      await expect(() =>
-        boatService.getBoatByUserId(boatProvider.defaultBoat._id.toString()),
-      ).rejects.toThrow(NotFoundException);
+    it('should return null because boat with given userid doesnt exist', async () => {
+      const result = await boatService.getBoatByUserId(
+        boatProvider.defaultBoat._id.toString(),
+      );
+      expect(result).toBeNull();
     });
 
     it('should return boat by userid', async () => {
