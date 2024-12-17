@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsPhoneNumber, IsString } from 'class-validator';
 
 export class RegistrationInputDto {
   @IsString()
@@ -15,4 +15,14 @@ export class RegistrationInputDto {
 
   @IsString()
   givenName: string;
+
+  @IsPhoneNumber()
+  phoneNumber: string;
+
+  @IsString()
+  userType: string;
+
+  @IsOptional()
+  @IsString()
+  invitationCode?: string;
 }

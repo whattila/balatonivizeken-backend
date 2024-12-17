@@ -17,6 +17,8 @@ export class TestUserProvider {
       _id: new Types.ObjectId('64c38c441ae9028fd6fa6b8b'),
       username: 'takee',
       emailAddress: 'test@test.com',
+      phoneNumber: '+36309846500',
+      userType: 'normal',
       familyName: 'Takacs',
       givenName: 'Balint',
       passwordHash:

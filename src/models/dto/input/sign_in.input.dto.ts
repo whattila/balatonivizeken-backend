@@ -6,4 +6,7 @@ export class SignInInputDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  userType: string;
 }

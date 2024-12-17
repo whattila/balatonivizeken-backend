@@ -11,6 +11,7 @@ import { RegistrationInputDto } from '../../models/dto/input/registration.input.
 import { SignInInputDto } from '../../models/dto/input/sign_in.input.dto';
 import { User } from '../../models/schema/user.schema';
 import { UsersService } from '../users/users.service';
+import { UserType } from '../../models/enums/user_type.enum';
 
 const salt = config.saltValue;
 
@@ -22,16 +23,22 @@ export class AuthService {
   ) {}
 
   async signIn(signInDto: SignInInputDto) {
-    const user = await this.usersService.findOne(signInDto.username);
+    const user = await this.usersService.findByUserName(signInDto.username);
     if (!user) {
       throw new NotFoundException('Felhasználó nem létezik');
     }
+
+    if (signInDto.userType !== user.userType) {
+      throw new NotFoundException('Felhasználó típusa nem egyezik a regisztrációkor megadottal!');
+    }
+
     const inputPasswordHash = await bcrypt.hash(signInDto.password, salt);
     if (user?.passwordHash !== inputPasswordHash) {
       throw new NotFoundException(
         'A megadott jelszó hibás, próbálja újra, vagy kérjen új jelszót!',
       );
     }
+
     const payload = { username: user.username, sub: user._id };
     return {
       id: user._id,
@@ -51,12 +58,26 @@ export class AuthService {
     if (user) {
       throw new BadRequestException('Ezzel az emaillel már regisztráltak!');
     }
-    user = await this.usersService.findOne(registration.username);
+    user = await this.usersService.findByUserName(registration.username);
 
     if (user) {
       throw new BadRequestException(
         'Ezzel a felhasználónévvel már regisztráltak!',
       );
+    }
+
+    switch (registration.userType) {
+      case UserType.ADMIN:
+        if (registration.invitationCode !== config.adminCode)
+          throw new BadRequestException('Helytelen meghívókód!');
+        break;
+      case UserType.LIFEGUARD:
+        if (registration.invitationCode !== config.lifeguardCode)
+          throw new BadRequestException('Helytelen meghívókód!');
+        break;
+      default:
+        if (registration.userType !== UserType.NORMAL)
+          throw new BadRequestException('Érvénytelen felhasználó típus!');
     }
 
     const newUser = new User();
@@ -66,8 +87,10 @@ export class AuthService {
     newUser.verificationCode = this._generateRandomCode();
     newUser.isEmailVerified = false;
     newUser.username = registration.username;
+    newUser.phoneNumber = registration.phoneNumber;
     const passwordHash = await bcrypt.hash(registration.password, salt);
     newUser.passwordHash = passwordHash;
+    newUser.userType = registration.userType;
 
     const createdUser = await this.usersService.create(newUser);
 

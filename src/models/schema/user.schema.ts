@@ -22,6 +22,12 @@ export class User {
   @Prop({ required: true })
   username: string;
 
+  @Prop({ required: true })
+  phoneNumber: string;
+
+  @Prop({ required: true })
+  userType: string;
+
   @Prop()
   verificationCode?: string;
 

@@ -7,6 +7,7 @@ import { BoatInputDto } from '../../models/dto/input/boat.input.dto';
 import { GpsEnabledInput } from '../../models/dto/input/gps_enabled.input.dto';
 import { LocationInput } from '../../models/dto/input/location_update.input.dto';
 import { Boat } from '../../models/schema/boat.schema';
+import { BoatHeaderDto } from '../../models/dto/boat.header.dto';
 
 @Injectable()
 export class BoatService {
@@ -39,7 +40,7 @@ export class BoatService {
       throw new NotFoundException('A hajó nem található');
     }
 
-    if (boat.lastPositions.length == 5) {
+    if (boat.lastPositions.length >= 5) {
       await this.boatModel
         .findByIdAndUpdate(
           { _id: id },
@@ -87,11 +88,12 @@ export class BoatService {
     return boat;
   }
 
+  // I removed throwing 'NotFoundException('A hajó nem található')' here, because the client didn't work that way. Can it cause any problems here?
+  // Or should it be removed in other methods as well?
+  // Now the relevant test doesn't work
+  // Can we make the client work in another way?
   async getBoatByUserId(userId: string): Promise<Boat> {
     const boat = await this.boatModel.findOne({ userId: userId }).lean();
-    if (!boat) {
-      throw new NotFoundException('A hajó nem található');
-    }
     return boat;
   }
 
@@ -115,6 +117,11 @@ export class BoatService {
     });
 
     return plainToInstance(BoatMarkerDto, boatsInRange);
+  }
+
+  async getBoatHeaders(): Promise<BoatHeaderDto[]> {
+    const boats = await this.boatModel.find().lean();
+    return plainToInstance(BoatHeaderDto, boats);
   }
 
   _degreesToRadians(degrees: number): number {

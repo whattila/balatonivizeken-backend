@@ -136,10 +136,11 @@ describe('BoatService', () => {
   });
 
   describe('getBoatByUserId', () => {
-    it('should fail because boat with given userid doesnt exist', async () => {
-      await expect(() =>
-        boatService.getBoatByUserId(boatProvider.defaultBoat._id.toString()),
-      ).rejects.toThrow(NotFoundException);
+    it('should return null because boat with given userid doesnt exist', async () => {
+      const result = await boatService.getBoatByUserId(
+        boatProvider.defaultBoat._id.toString(),
+      );
+      expect(result).toBeNull();
     });
 
     it('should return boat by userid', async () => {
@@ -165,6 +166,34 @@ describe('BoatService', () => {
         latitude: 0,
       });
       expect(markers.length).toEqual(0);
+    });
+  });
+
+  describe('getBoatHeaders', () => {
+    it('should get headers corresponding to the boats in the database', async () => {
+      await boatService.updateBoat({
+        userId: userProvider.defaultUser._id.toString(),
+        boatType: 'smallBoat',
+        displayName: 'asd',
+        gpsEnabled: false,
+        longitude: 0,
+        latitude: 0,
+      });
+      const boats = await boatModel.find();
+      expect(boats.length).toEqual(2);
+
+      const boatHeaders = await boatService.getBoatHeaders();
+      expect(boatHeaders.length).toEqual(2);
+      expect(boatHeaders[0]).toEqual({
+        _id: boats[0]._id,
+        boatType: boats[0].boatType,
+        displayName: boats[0].displayName
+      });
+      expect(boatHeaders[1]).toEqual({
+        _id: boats[1]._id,
+        boatType: boats[1].boatType,
+        displayName: boats[1].displayName
+      });
     });
   });
 

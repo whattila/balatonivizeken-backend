@@ -43,13 +43,19 @@ describe('AuthService', () => {
   describe('signIn', () => {
     it('should fail because user doesnt exist', async () => {
       await expect(() =>
-        authService.signIn({ username: 'asd', password: 'asd' }),
+        authService.signIn({username: 'asd', password: 'asd', userType: 'normal'}),
       ).rejects.toThrow(NotFoundException);
     });
 
     it('should fail because password is wrong', async () => {
       await expect(() =>
-        authService.signIn({ username: 'takee', password: 'asd' }),
+        authService.signIn({ username: 'takee', password: 'asd', userType: 'normal'}),
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('should fail because user type is not the same given at registration', async () => {
+      await expect(() => 
+        authService.signIn({ username: 'takee', password: 'asd', userType: 'lifeguard'}),
       ).rejects.toThrow(NotFoundException);
     });
 
@@ -57,6 +63,7 @@ describe('AuthService', () => {
       const result = await authService.signIn({
         username: 'takee',
         password: 'Xyz123#@',
+        userType: 'normal'
       });
       expect(result).toBeDefined();
     });
@@ -71,6 +78,8 @@ describe('AuthService', () => {
           emailAddress: 'test@test.com',
           familyName: 'asd',
           givenName: 'asd',
+          phoneNumber: '+36309846500',
+          userType: 'normal'
         }),
       ).rejects.toThrow(BadRequestException);
     });
@@ -83,17 +92,94 @@ describe('AuthService', () => {
           emailAddress: 'tes1t@test.com',
           familyName: 'asd',
           givenName: 'asd',
+          phoneNumber: '+36309846500',
+          userType: 'normal'
         }),
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('should register', async () => {
+    it('should fail because invitation code does not equal with lifeguard invitation code', async () => {
+      await expect(() =>
+        authService.registration({
+          username: 'test',
+          password: 'asd',
+          emailAddress: 'tes1t@test.com',
+          familyName: 'asd',
+          givenName: 'asd',
+          phoneNumber: '+36309846500',
+          userType: 'lifeguard',
+          invitationCode: 'pamela'
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('should fail because invitation code does not equal with admin invitation code', async () => {
+      await expect(() =>
+        authService.registration({
+          username: 'test',
+          password: 'asd',
+          emailAddress: 'tes1t@test.com',
+          familyName: 'asd',
+          givenName: 'asd',
+          phoneNumber: '+36309846500',
+          userType: 'admin',
+          invitationCode: 'baywatch'
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('should fail because user type is invalid', async () => {
+      await expect(() =>
+        authService.registration({
+          username: 'test',
+          password: 'asd',
+          emailAddress: 'tes1t@test.com',
+          familyName: 'asd',
+          givenName: 'asd',
+          phoneNumber: '+36309846500',
+          userType: 'administrator',
+          invitationCode: 'alfabravo'
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('should register normal user', async () => {
       const result = await authService.registration({
         username: 'test',
         password: 'asd',
         emailAddress: 'tes1t@test.com',
         familyName: 'asd',
         givenName: 'asd',
+        phoneNumber: '+36309846500',
+        userType: 'normal'
+      });
+      expect(result).toBeDefined();
+    });
+
+    it('should register lifeguard user', async () => {
+      const result = await authService.registration({
+        username: 'test',
+        password: 'asd',
+        emailAddress: 'tes1t@test.com',
+        familyName: 'asd',
+        givenName: 'asd',
+        phoneNumber: '+36309846500',
+        userType: 'lifeguard',
+        invitationCode: 'baywatch'
+      });
+      expect(result).toBeDefined();
+    });
+
+    it('should register admin user', async () => {
+      const result = await authService.registration({
+        username: 'test',
+        password: 'asd',
+        emailAddress: 'tes1t@test.com',
+        familyName: 'asd',
+        givenName: 'asd',
+        phoneNumber: '+36309846500',
+        userType: 'admin',
+        invitationCode: 'alfabravo'
       });
       expect(result).toBeDefined();
     });
